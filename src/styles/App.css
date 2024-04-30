@@ -8,6 +8,31 @@
     width: 24rem;
 
     --tw-bg-opacity: 1;
+    background-color: var(--fallback-b1, oklch(var(--b1)/var(--tw-bg-opacity)));
+
+    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.card input {
+    width: 100%;
+}
+
+.text-5xl.font-bold,
+.text-5xl.font-semibold {
+    margin-top: 5rem;
+}
+.card {
+    gap: 1rem;
+    padding: 1.25rem;
+    margin: 1.25rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 24rem;
+
+    --tw-bg-opacity: 1;
     background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
 
     --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -18,3 +43,136 @@
 .card input{
     width: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    25% {
+        background-position: 50% 100%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 50% 0%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.page {
+    margin: 0;
+    /* height: 80vh; */
+    background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+    background-size: 300% 300%;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+.animated-text {
+    background-image: linear-gradient(225deg, #FF3CAC 0%, #8801ff 50%, #0095ff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 10s ease infinite;
+    display: inline-block;
+    line-height: 1.2; 
+    padding: 0.2em 0; 
+}
+
+.page2{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+    text-align: center;
+}
+
+.animated-text2 {
+    background-image: linear-gradient(225deg, #77ff00 0%, #ff0145 50%, #0004ff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 10s ease infinite;
+    display: inline-block;
+    line-height: 1.2; 
+    padding: 0.2em 0; 
+}
+
+.btn-animated-2{
+    background-image: linear-gradient(225deg, #77ff00 0%, #ff0044 50%, #0004ff 100%);
+    background-size: 700% 700%;
+    animation: gradientAnimation 10s ease infinite;
+    color: white;
+    font-weight: 700 !important;   
+}
+.btn-animated-2:hover{
+    background-image: linear-gradient(225deg, #77ff00 0%, #ff0044 50%, #0004ff 100%);
+    background-size: 700% 700%;
+    animation: gradientAnimation 10s ease infinite;
+    scale: 0.95;
+}
+
+.page .card{
+    padding: 24px;
+    background-color: #2e106a;
+    background-image: linear-gradient(130deg, #5a1fd0 10%, rgba(46, 16, 106, 0) 70%);
+    background-position: 50% 50%;
+    background-size: 300% 300%;
+    border-color: #7b61ff !important;
+    -webkit-mask-image: unset !important;
+    transition: gradientAnimation .1s ease-in-out;
+    width: 20rem;
+    height: fit-content;
+    color: white;
+    font-size: large;
+    font-weight: 600;
+}
+.page .card:hover{
+    filter: brightness(1.2);
+    transition: .1s !important;
+}
+@media screen and (max-width: 1000px) {
+    .page .card {
+        width: 10rem;
+    }
+}
+@media screen and (max-width: 700px) {
+    .page .card {
+        width: 100% !important;
+    }
+}
+.animated-text3 {
+    background-image: linear-gradient(225deg, #ffd3ec 0%, #e4c1ff 50%, #d0ebff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 10s ease infinite;
+}
+

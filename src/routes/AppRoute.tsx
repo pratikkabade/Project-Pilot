@@ -7,11 +7,12 @@ import { FM } from "../pages/FM"
 import { SM } from "../pages/SM"
 import { Employee } from "../pages/Employee"
 import { DataRefresh } from "../pages/DataRefresh"
-import { HomePage } from "../pages/Home"
+import { Lander } from "../pages/Lander"
+import { AppFooter } from "../components/layout/AppFooter"
 
 export const Route_Items = [
-    { name: "Login", link: "/", element: <HomePage /> },
-    { name: "Login", link: "/home", element: <HomePage /> },
+    { name: "Login", link: "/", element: <Lander /> },
+    { name: "Login", link: "/home", element: <Lander /> },
     { name: "Login", link: "/login", element: <Login /> },
     { name: "PM", link: "/PM", element: <PM /> },
     { name: "FM", link: "/FM", element: <FM /> },
@@ -46,7 +47,7 @@ export const AppRoutes = () => {
                         })
                     }
                 </Routes>
-
+<AppFooter />
             </BrowserRouter>
         </div>
     )

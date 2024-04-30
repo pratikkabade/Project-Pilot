@@ -16,7 +16,7 @@ export const DataRefresh = () => {
     }
 
     return (
-        <div>
+        <div className='flex flex-row justify-center align-middle items-center py-40 pt-60'>
             <button
             className='btn btn-primary'
             onClick={saveData}>
