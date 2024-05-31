@@ -4,6 +4,7 @@ import ProjectInterface from "../interfaces/ProjectInterface";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
+import FinanceRange from "../components/FinanceRange";
 
 export const FM = () => {
      const [finances, setFinances] = useState<FinanceInterface[]>([]);
@@ -233,6 +234,29 @@ export const FM = () => {
                          >
                               Add Other Expense
                          </button>
+                    </div>
+
+
+
+
+
+
+
+
+                    <div className="card">
+                         {
+                              projects.map((_: ProjectInterface, index) => (
+                                   <div key={index} className="flex flex-col">
+                                        {index === 0 && (
+                                             <FinanceRange
+                                                  projects={projects}
+                                                  finances={finances}
+                                                  totalExpenses={Math.floor(totalExpenses)}
+                                             />
+                                        )}
+                                   </div>
+                              ))
+                         }
                     </div>
                </div>
           </div >
