@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TaskInterface from "../interfaces/TaskInterface";
 import EmployeeInterface from "../interfaces/EmployeeInterface";
-import { Card, Select } from "flowbite-react";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
@@ -51,62 +50,83 @@ export const Employee = () => {
                     </span>
                 ))}
             </h1>
-            <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
+            <h2 className=' mt-10 text-2xl font-semibold'>To-Dos</h2>
             <div className="flex flex-row flex-wrap">
                 {
                     thisTasks
-                        .filter((task: TaskInterface) => task.status !== 'completed')
-                        .map((task: TaskInterface) => (
-                            <Card key={task.task_id} className={`flex flex-col m-3 
-                        ${task.status === 'in-progress' ? '' :
-                                    task.status === 'pending' ? '' : ''} 
+                        .filter((task: TaskInterface) => task.status !== 'completed').length !== 0 ?
+                        thisTasks
+                            .filter((task: TaskInterface) => task.status !== 'completed')
+                            .map((task: TaskInterface) => (
+                                <div key={task.task_id} className={`card flex flex-col m-3 
+                        ${task.status === 'in-progress' ? 'bg-yellow-50 dark:bg-yellow-900' :
+                                        task.status === 'pending' ? 'bg-red-50 dark:bg-red-950' : ''} 
                         `}>
-
-
-                                <h3 className='text-xl font-normal'>
-                                    Task:
-                                    <span className='font-bold ml-2'>{task.title}</span>
-                                </h3>
-                                <h3 className='text-xl font-normal'>
-                                    Description:
-                                    <span className='font-bold ml-2'>{task.description}</span>
-                                </h3>
-                                <h3 className='text-xl font-normal'>
-                                    <Select
-                                        className=''
-                                        value={task.status}
-                                        onChange={(e) => changeStatus(task.task_id, e.target.value)}
-                                    >
-                                        {StatusOptions.map((status) => (
-                                            <option key={status} value={status}>
-                                                {status}
-                                            </option>
-                                        ))}
-                                    </Select>
-                                </h3>
-                            </Card>
-                        ))
+                                    <h3 className='text-xl font-normal'>
+                                        Task:
+                                        <span className='font-bold ml-2'>{task.title}</span>
+                                    </h3>
+                                    <h3 className='text-xl font-normal'>
+                                        Description:
+                                        <span className='font-bold ml-2'>{task.description}</span>
+                                    </h3>
+                                    <h3 className='text-xl font-normal'>
+                                        <select
+                                            className='select select-bordered w-full'
+                                            value={task.status}
+                                            onChange={(e) => changeStatus(task.task_id, e.target.value)}
+                                        >
+                                            {StatusOptions.map((status) => (
+                                                <option key={status} value={status}>
+                                                    {status}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </h3>
+                                </div>
+                            ))
+                        :
+                        <h3 className='text-xl font-normal p-5 text-emerald-700 dark:text-emerald-400'>All Done</h3>
                 }
-                {
-                    thisTasks
-                        .filter((task: TaskInterface) => task.status === 'completed')
-                        .map((task: TaskInterface) => (
-                            <div key={task.task_id} className='flex flex-col m-3 '>
-                                {task.title} | {task.description} | {task.status}
-                                <Select
-                                    className='w-1/4'
-                                    value={task.status}
-                                    onChange={(e) => changeStatus(task.task_id, e.target.value)}
-                                >
-                                    {StatusOptions.map((status) => (
-                                        <option key={status} value={status}>
-                                            {status}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </div>
-                        ))
-                }
+            </div>
+            <div className="collapse bg-base-300 mt-10 p-5">
+                <input type="checkbox" />
+                <h2 className='collapse-title text-xl font-semibold'>Show Archived</h2>
+                <div className="flex flex-row flex-wrap collapse-content">
+                    {
+                        thisTasks
+                            .filter((task: TaskInterface) => task.status === 'completed').length !== 0 ?
+                            thisTasks
+                                .filter((task: TaskInterface) => task.status === 'completed')
+                                .map((task: TaskInterface) => (
+                                    <div key={task.task_id} className={`card m-3`}>
+                                        <h3 className='text-xl font-normal'>
+                                            Task:
+                                            <span className='font-bold ml-2'>{task.title}</span>
+                                        </h3>
+                                        <h3 className='text-xl font-normal'>
+                                            Description:
+                                            <span className='font-bold ml-2'>{task.description}</span>
+                                        </h3>
+                                        <h3 className='text-xl font-normal'>
+                                            <select
+                                                className='select select-bordered w-full'
+                                                value={task.status}
+                                                onChange={(e) => changeStatus(task.task_id, e.target.value)}
+                                            >
+                                                {StatusOptions.map((status) => (
+                                                    <option key={status} value={status}>
+                                                        {status}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </h3>
+                                    </div>
+                                ))
+                            :
+                            <h3 className='text-xl font-normal p-5 text-red-700 dark:text-red-400'>Nothing's done yet</h3>
+                    }
+                </div>
             </div>
         </div>
     );

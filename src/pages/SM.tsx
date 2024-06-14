@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Select, TextInput } from "flowbite-react";
 import TaskInterface from "../interfaces/TaskInterface";
 import ProjectInterface from "../interfaces/ProjectInterface";
 import EmployeeInterface from "../interfaces/EmployeeInterface";
@@ -48,6 +47,13 @@ export const SM = () => {
           SetItem('tasks', tasks);
      };
 
+     function calculateTaskCompletionRate(tasks: TaskInterface[], employeeId: string): number {
+          const employeeTasks = tasks.filter(task => task.employee_id === employeeId);
+          const completedTasks = employeeTasks.filter(task => task.status === 'completed').length;
+          const totalTasks = employeeTasks.length;
+          return totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+     }
+
      return (
           <div className="p-5">
                <h1 className='text-5xl font-bold'>Welcome back, SM</h1>
@@ -57,7 +63,7 @@ export const SM = () => {
                <div className="flex flex-row flex-wrap">
                     {
                          employees.map((employee: EmployeeInterface, index) => (
-                              <Card key={index} className="m-3">
+                              <div key={index} className="card m-3">
                                    <h3 className='text-2xl font-semibold'>
                                         {employee.name}
                                    </h3>
@@ -74,7 +80,10 @@ export const SM = () => {
                                              )
                                         </span>
                                    </h3>
-                              </Card>
+                                   <progress className="progress progress-primary w-56" value={
+                                        calculateTaskCompletionRate(tasks, employee.employee_id)
+                                   } max="100"></progress>
+                              </div>
                          ))
                     }
                </div>
@@ -83,7 +92,7 @@ export const SM = () => {
                <div className="flex flex-row flex-wrap">
                     {
                          projects.map((project: ProjectInterface, index) => (
-                              <Card key={index} className=" m-5">
+                              <div key={index} className="card">
                                    <h3 className='text-2xl font-semibold'>
                                         {project.name}
                                    </h3>
@@ -115,7 +124,7 @@ export const SM = () => {
                                         </span>
                                    </h3>
 
-                              </Card>
+                              </div>
                          ))
                     }
                </div>
@@ -124,7 +133,7 @@ export const SM = () => {
                <h2 className=' mt-10 text-2xl font-semibold'>Tasks insight</h2>
                <div className="flex flex-row flex-wrap">
                     {tasks.map((task: TaskInterface, index) => (
-                         <Card key={index} className='m-5'>
+                         <div key={index} className='card'>
                               <h3 className='text-xl font-normal'>
                                    Task:
                                    <span className='font-bold ml-2'>
@@ -159,48 +168,62 @@ export const SM = () => {
                                         }
                                    </span>
                               </h3>
-                         </Card>
+                         </div>
                     ))}
                </div>
 
 
                <h2 className=' mt-10 text-2xl font-semibold'>Create Tasks</h2>
                <div className="flex flex-row">
-                    <Card className="m-5">
-                         <TextInput
+                    <div className="card">
+                         <input
+                              type="text"
                               placeholder="Title"
                               value={newTask}
+                              className="input input-bordered"
                               onChange={(e) => setNewTask(e.target.value)}
-                         />
-                         <TextInput
+                              required />
+                         <input
+                              type="text"
                               placeholder="Description"
+                              className="input input-bordered"
                               value={newTaskDescription}
                               onChange={(e) => setNewTaskDescription(e.target.value)}
-                         />
-                         <Select value={newTaskStatus} onChange={(e) => setNewTaskStatus(e.target.value)}>
+                              required />
+                         <select
+                              value={newTaskStatus}
+                              onChange={(e) => setNewTaskStatus(e.target.value)}
+                              className="select select-bordered w-full ">
                               <option value="">Select Status</option>
                               {
                                    StatusOptions.map((status: string, index) => (
                                         <option key={index} value={status}>{status}</option>
                                    ))
                               }
-                         </Select>
-                         <Select value={newTaskProjectID} onChange={(e) => setNewTaskProjectID(e.target.value)}>
+                         </select>
+                         <select
+                              value={newTaskProjectID}
+                              onChange={(e) => setNewTaskProjectID(e.target.value)}
+                              className="select select-bordered w-full ">
                               <option value="">Select Project</option>
                               {projects.map((project: ProjectInterface, index) => (
                                    <option key={index} value={project.project_id}>{project.name}</option>
                               ))}
-                         </Select>
-                         <Select value={newTaskEmployeeID} onChange={(e) => setNewTaskEmployeeID(e.target.value)}>
+                         </select>
+                         <select
+                              value={newTaskEmployeeID}
+                              onChange={(e) => setNewTaskEmployeeID(e.target.value)}
+                              className="select select-bordered w-full ">
                               <option value="">Select Employee</option>
                               {employees.map((employee: EmployeeInterface, index) => (
                                    <option key={index} value={employee.employee_id}>{employee.name}</option>
                               ))}
-                         </Select>
-                         <Button onClick={addTask}>
+                         </select>
+                         <button className="btn btn-primary"
+                              onClick={addTask}>
                               Add Task
-                         </Button>
-                    </Card>
+                         </button>
+                    </div>
                </div>
           </div>
      )

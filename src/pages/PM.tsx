@@ -1,4 +1,3 @@
-import { Button, Card, TextInput } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import ProjectInterface from '../interfaces/ProjectInterface';
 import EmployeeInterface from '../interfaces/EmployeeInterface';
@@ -38,15 +37,21 @@ export const PM = () => {
           finance.other_expenses.reduce((acc: number, other_expense: any) => acc +
                other_expense.other_expenses_amount, 0), 0)
      const amountLeft = totalAmount - totalOtherExpenses
-     const percentageAvailableFunds = (amountLeft / totalAmount) * 100
+     const percentageAvailableFunds = Math.floor((amountLeft / totalAmount) * 100);
 
      const employeesCount = employees.length
      const employeesAvailable = employees.filter((employee: EmployeeInterface) =>
           !tasks.map((task: any) => task.employee_id).includes(employee.employee_id)
      )
      const employeesWithCompletedTasks = employees.filter((employee: EmployeeInterface) =>
-          tasks.filter((task: any) => task.employee_id === employee.employee_id && task.status === 'completed').length > 0
+          tasks.every((task: any) => task.employee_id === employee.employee_id ? task.status === 'completed' : true)
      )
+
+     function calculateTaskCompletionRate(project_id: string) {
+          const tasksCount = tasks.filter((task: any) => task.project_id === project_id).length
+          const completedTasks = tasks.filter((task: any) => task.project_id === project_id && task.status === 'completed').length
+          return (completedTasks / tasksCount) * 100
+     }
 
      const tasksCount = tasks.length
      const completedTasks = tasks.filter((task: any) => task.status === 'completed').length
@@ -57,11 +62,11 @@ export const PM = () => {
                <h1 className='text-5xl font-bold'>Welcome back, PM</h1>
                <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
                <div className='flex flex-row flex-wrap'>
-                    <Card className='m-5'>
+                    <div className='card bg-base-100 w-96 shadow-xl p-5 gap-4 flex flex-col m-5'>
                          <h3 className='text-2xl font-semibold'>Finances</h3>
                          <h3 className='text-xl font-normal'>
                               Funds availability
-                              <span className='font-bold ml-2'>{percentageAvailableFunds.toFixed(2)}%</span>
+                              <span className='font-bold ml-2'>{percentageAvailableFunds}%</span>
                          </h3>
                          <h3 className='text-xl font-normal'>
                               Total Funds
@@ -75,8 +80,13 @@ export const PM = () => {
                               Available Funds
                               <span className='font-bold ml-2'>{amountLeft}</span>
                          </h3>
-                    </Card>
-                    <Card className='m-5'>
+                         {/* <div className={`radial-progress 
+                              ${percentageAvailableFunds > 60 ? 'text-success' :
+                                   percentageAvailableFunds > 40 ? 'text-warning' : 'text-error'}`} style={{ "--value": percentageAvailableFunds }} role="progressbar">
+                              {percentageAvailableFunds}%
+                         </div> */}
+                    </div>
+                    <div className='card'>
                          <h3 className='text-2xl font-semibold'>Employees</h3>
                          <h3 className='text-xl font-normal'>
                               Total Employees
@@ -87,13 +97,23 @@ export const PM = () => {
                               <span className='font-bold ml-2'>{employeesAvailable.map((employee: EmployeeInterface) => employee.name).join(', ')}</span>
                               <span className='font-extrabold ml-2'>({employeesAvailable.length})</span>
                          </h3>
+                         {/* <progress className={`progress 
+                              ${employeesAvailable/employeesCount > 60 ? 'progress-success' :
+                                   employeesAvailable/employeesCount > 40 ? 'progress-warning' : 'progress-error'}`} value={
+                                        employeesAvailable/employeesCount
+                                   } max={employeesCount}></progress> */}
                          <h3 className='text-xl font-normal'>
                               Employees with completed tasks
                               <span className='font-bold ml-2'>{employeesWithCompletedTasks.map((employee: EmployeeInterface) => employee.name).join(', ')}</span>
                               <span className='font-extrabold ml-2'>({employeesWithCompletedTasks.length})</span>
                          </h3>
-                    </Card>
-                    <Card className='m-5'>
+                         {/* <progress className={`progress 
+                              ${employeesWithCompletedTasks.length/employeesCount > 60 ? 'progress-success' :
+                                   employeesWithCompletedTasks.length/employeesCount > 40 ? 'progress-warning' : 'progress-error'}`} value={
+                                        employeesWithCompletedTasks.length/employeesCount
+                                   } max={employeesCount}></progress> */}
+                    </div>
+                    <div className='card'>
                          <h3 className='text-2xl font-semibold'>Tasks</h3>
                          <h3 className='text-xl font-normal'>
                               Completed Tasks:
@@ -103,14 +123,19 @@ export const PM = () => {
                               Work Pending:
                               <span className='font-bold ml-2'>{percentageTasksLeft.toFixed(2)}%</span>
                          </h3>
-                    </Card>
+                         <progress className={`progress 
+                              ${percentageTasksLeft > 60 ? 'progress-success' :
+                                   percentageTasksLeft > 40 ? 'progress-warning' : 'progress-error'}`} value={
+                                        percentageTasksLeft
+                                   } max="100"></progress>
+                    </div>
                </div>
 
 
                <h2 className=' mt-10 text-2xl font-semibold'>Project Details</h2>
                <div className='flex flex-row flex-wrap'>
                     {projects.map((project: ProjectInterface) => (
-                         <Card key={project.project_id} className='m-5'>
+                         <div key={project.project_id} className='card'>
                               <h3 className='text-2xl font-semibold'>{project.name}</h3>
                               <h3 className='text-xl font-normal'>
                                    Completed Tasks:
@@ -123,6 +148,11 @@ export const PM = () => {
                                         }
                                    </span>
                               </h3>
+                         <progress className={`progress 
+                              ${calculateTaskCompletionRate(project.project_id) > 60 ? 'progress-success' :
+                                   calculateTaskCompletionRate(project.project_id) > 40 ? 'progress-warning' : 'progress-error'}`} value={
+                                        calculateTaskCompletionRate(project.project_id)
+                                   } max="100"></progress>
                               <h3 className='text-xl font-normal'>
                                    Employees Assigned:
                                    <span className='font-bold ml-2'>
@@ -172,7 +202,7 @@ export const PM = () => {
                                         }
                                    </span>
                               </h3>
-                         </Card>
+                         </div>
                     ))}
 
                </div>
@@ -181,14 +211,20 @@ export const PM = () => {
                <h2 className=' mt-10 text-2xl font-semibold'>Add Project</h2>
 
                <div className='flex flex-row'>
-                    <Card className='m-5'>
-                         <TextInput
+                    <div className='card'>
+                         <input
+                              type="text"
                               placeholder='Add a new project'
                               value={newProject}
                               onChange={(e) => setNewProject(e.target.value)}
-                         />
-                         <Button onClick={addProject}>Add</Button>
-                    </Card>
+                              className="input input-bordered"
+                              required />
+                         <button
+                              className="btn btn-primary"
+                              onClick={addProject}>
+                              Add
+                         </button>
+                    </div>
                </div>
           </div>
      );

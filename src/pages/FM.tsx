@@ -1,4 +1,3 @@
-import { Button, Card, Select, TextInput } from "flowbite-react";
 import FinanceInterface from "../interfaces/FinanceInterface";
 import { useEffect, useState } from "react";
 import ProjectInterface from "../interfaces/ProjectInterface";
@@ -45,8 +44,6 @@ export const FM = () => {
      };
 
      const addOtherExpense = () => {
-          finances.map((finance) => console.log(finance.project_id));
-
           const financeIndex = finances.findIndex((finance) => finance.project_id === newProjectID);
           if (financeIndex === -1) {
                return;
@@ -66,13 +63,15 @@ export const FM = () => {
           SetItem('finances', finances);
      }
 
+     const totalExpenses = finances.reduce((acc: number, finance: any) => acc + finance.amount, 0)
+
      return (
           <div className="p-5">
                <h1 className='text-5xl font-bold'>Welcome back, FM</h1>
                <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
                <div className="flex flex-row flex-wrap">
                     {finances.map((finance: FinanceInterface) => (
-                         <Card key={finance.project_id} className="m-5">
+                         <div key={finance.project_id} className="card">
                               <h3 className='text-2xl font-semibold'>
                                    {
                                         projects.find(project => project.project_id === finance.project_id)?.name
@@ -92,7 +91,7 @@ export const FM = () => {
                               </h3>
                               <div className="flex flex-row flex-wrap">
                                    {finance.other_expenses.map((other_expense, index) => (
-                                        <Card className="m-3" key={index}>
+                                        <div className="shadow-xl rounded-xl p-3 m-3 bg-base-300" key={index}>
                                              <h3 className='text-lg font-normal'>
                                                   Funds available
                                                   <span className='font-bold ml-2'>{other_expense.other_expenses_name}</span>
@@ -117,91 +116,124 @@ export const FM = () => {
                                                   Funds used
                                                   <span className='font-bold ml-2'>{other_expense.other_expenses_amount}</span>
                                              </h3>
-                                        </Card>
+                                        </div>
                                    ))}
                               </div>
-                         </Card>
+                         </div>
                     ))}
                </div>
 
 
                <h2 className=' mt-10 text-2xl font-semibold'>Add-Manage</h2>
 
-               <div className="flex flow-row">
-                    <Card className="m-5">
-                         <Select value={newProjectID} onChange={(e) => setnewProjectID(e.target.value)}>
+               <div className="flex flow-row flex-wrap">
+                    <div className="card">
+                         <select
+                              className="select select-bordered w-full "
+                              value={newProjectID} onChange={(e) => setnewProjectID(e.target.value)}>
                               <option value="">Select Project</option>
                               {projects.map((project: ProjectInterface, index) => (
                                    <option key={index} value={project.project_id}>{project.name}</option>
                               ))}
-                         </Select>
-                         <TextInput
+                         </select>
+                         <input
+                              className="input input-bordered"
                               type="number"
                               value={newAmount}
                               placeholder="Total Amount"
                               onChange={(e) => setnewAmount(Number(e.target.value))}
                          />
-                         <Button
+                         <button
+                              className="btn btn-primary"
                               onClick={expenseChange}
                               disabled={!newProjectID}>
                               Add
-                         </Button>
-                    </Card>
+                         </button>
+                    </div>
 
-                    <Card className="m-5">
-                         <TextInput
+                    <div className="card">
+                         <input
+                              className="input input-bordered"
                               type="text"
                               placeholder="Other Expense"
                               onChange={(e) => setnewOtherExpense(e.target.value)}
                          />
                          <div className="flex flex-row">
-                              <TextInput
+                              <input
+                                   className="input input-bordered w-full mr-4"
                                    type="date"
                                    placeholder="Date"
                                    onChange={(e) => setnewDate(e.target.value)}
                                    value={newDate}
-                                   className="w-full"
                               />
-                              <Button type="button" className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 me-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 w-fit h-full ml-2"
+                              <button
+                                   type="button" className="btn btn-primary"
                                    onClick={() => {
                                         setnewDate(new Date().toISOString().split('T')[0])
                                    }}
                               >
                                    Today
-                              </Button>
+                              </button>
                          </div>
 
-                         <TextInput
+                         <input
+                              className="input input-bordered"
                               type="text"
                               placeholder="Description"
                               onChange={(e) => setnewDescription(e.target.value)}
                          />
-                         <TextInput
+                         <input
+                              className="input input-bordered"
                               type="text"
                               placeholder="Category"
                               onChange={(e) => setnewCategory(e.target.value)}
                          />
-                         <Select value={newStatus} onChange={(e) => setnewStatus(e.target.value)}>
+                         <select
+                              className="select select-bordered w-full "
+                              value={newStatus} onChange={(e) => setnewStatus(e.target.value)}>
                               <option value="">Select Status</option>
                               {
                                    StatusOptions.map((status: string, index) => (
                                         <option key={index} value={status}>{status}</option>
                                    ))
                               }
-                         </Select>
-                         <TextInput
+                         </select>
+                         <input
+                              className="input input-bordered"
                               type="number"
+                              value={newOtherExpenseAmount}
                               placeholder="Other Expense Amount"
                               onChange={(e) => setnewOtherExpenseAmount(Number(e.target.value))}
                          />
+                         <div className="flex flex-row justify-around">
+                              <button
+                                   className="btn btn-outline btn-primary rounded-full w-20 h-0"
+                                   onClick={() => setnewOtherExpenseAmount(newOtherExpenseAmount + 100)}
+                              >
+                                   + 100
+                              </button>
+                              <button
+                                   className="btn btn-outline btn-primary rounded-full w-20 h-0"
+                                   onClick={() => setnewOtherExpenseAmount(newOtherExpenseAmount + 500)}
+                              >
+                                   + 500
+                              </button>
+                              <button
+                                   className="btn btn-outline btn-primary rounded-full w-20 h-0"
+                                   onClick={() => setnewOtherExpenseAmount(newOtherExpenseAmount + 1000)}
+                              >
+                                   + 1000
+                              </button>
+                         </div>
 
-                         <Button
+                         <button
+                              className="btn btn-primary"
                               onClick={addOtherExpense}
                               disabled={!newProjectID}
                          >
                               Add Other Expense
-                         </Button>
-                    </Card>
+                         </button>
+                    </div>
                </div>
           </div >
      );

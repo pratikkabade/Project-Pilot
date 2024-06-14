@@ -1,4 +1,3 @@
-import { Button } from 'flowbite-react';
 import employees from '../data/EmployeeData.json';
 import finances from '../data/FinanceData.json';
 import projects from '../data/ProjectData.json';
@@ -13,13 +12,16 @@ export const DataRefresh = () => {
         SetItem('projects', projects);
         SetItem('tasks', tasks);
         SetItem('all_user', userdata);
+        alert('Data Refreshed');
     }
 
     return (
         <div>
-            <Button onClick={saveData}>
+            <button
+            className='btn btn-primary'
+            onClick={saveData}>
                 DataRefresh
-            </Button>
+            </button>
         </div>
     )
 }
