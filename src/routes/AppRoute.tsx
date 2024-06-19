@@ -10,6 +10,7 @@ import { Lander } from "../pages/Lander"
 import { AppFooter } from "../components/layout/AppFooter"
 import { Dashboard } from "../pages/Dashboard"
 import { About } from "../pages/About"
+import ScrollToTop from "../hooks/ScrollToTop"
 
 export const Route_Items = [
     { name: "Login", link: "/", element: <Lander /> },
@@ -38,6 +39,7 @@ export const AppRoutes = () => {
         <div>
             <BrowserRouter>
                 <AppNavbar />
+                <ScrollToTop />
                 <Routes>
                     {
                         Route_Items.map((item, index) => {
