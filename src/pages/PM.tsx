@@ -69,7 +69,7 @@ export const PM = () => {
                                    </h3>
                                    <div className={`mt-5 radial-progress 
                               ${percentageAvailableFunds > 60 ? 'text-success' :
-                                             percentageAvailableFunds > 40 ? 'text-warning' : 'text-error'}`} style={{ "--value": percentageAvailableFunds }} role="progressbar">
+                                             percentageAvailableFunds > 40 ? 'text-warning' : 'text-error'}`} style={{ "--value": percentageAvailableFunds } as React.CSSProperties} role="progressbar">
                                         {percentageAvailableFunds}%
                                    </div>
                               </div>

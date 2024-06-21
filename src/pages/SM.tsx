@@ -3,7 +3,6 @@ import TaskInterface from "../interfaces/TaskInterface";
 import ProjectInterface from "../interfaces/ProjectInterface";
 import EmployeeInterface from "../interfaces/EmployeeInterface";
 import StatusOptions from "../interfaces/StatusOptions";
-import FinanceInterface from "../interfaces/FinanceInterface";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
 import { FundingStatus } from "../components/FundingStatus";
@@ -13,7 +12,6 @@ export const SM = () => {
      const [tasks, setTasks] = useState<TaskInterface[]>([]);
      const [projects, setProjects] = useState<ProjectInterface[]>([]);
      const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
-     const [finances, setFinances] = useState<FinanceInterface[]>([]);
 
      useEffect(() => {
           const tasks = GetItem('tasks');
@@ -22,8 +20,6 @@ export const SM = () => {
           setProjects(projects);
           const employees = GetItem('employees');
           setEmployees(employees);
-          const finances = GetItem('finances');
-          setFinances(finances);
           PageName('SM');
      }, []);
 
