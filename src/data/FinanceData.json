@@ -1,14 +1,52 @@
 [
     {
         "project_id": "p1",
-        "amount": 100
+        "amount": 100,
+        "other_expenses": [
+            {
+                "other_expenses_name": "oe1",
+                "other_expenses_date": "2021-01-01",
+                "other_expenses_description": "oe1 description",
+                "other_expenses_category": "oe1 category",
+                "other_expenses_status": "completed",
+                "other_expenses_amount": 10
+            },
+            {
+                "other_expenses_name": "oe2",
+                "other_expenses_date": "2021-01-01",
+                "other_expenses_description": "oe2 description",
+                "other_expenses_category": "oe2 category",
+                "other_expenses_status": "completed",
+                "other_expenses_amount": 20
+            }
+        ]
     },
     {
         "project_id": "p2",
-        "amount": 200
+        "amount": 200,
+        "other_expenses": [
+            {
+                "other_expenses_name": "oe2",
+                "other_expenses_date": "2021-01-01",
+                "other_expenses_description": "oe2 description",
+                "other_expenses_category": "oe2 category",
+                "other_expenses_status": "completed",
+                "other_expenses_amount": 20
+            }
+        ]
     },
     {
         "project_id": "p3",
-        "amount": 100
+        "amount": 100,
+        "other_expenses": [
+            {
+                "other_expenses_name": "oe3",
+                "other_expenses_date": "2021-01-01",
+                "other_expenses_description": "oe3 description",
+                "other_expenses_category": "oe3 category",
+                "other_expenses_status": "completed",
+                "other_expenses_amount": 30
+            }
+        ]
     }
 ]
