@@ -5,6 +5,8 @@ import ProjectInterface from "../interfaces/ProjectInterface";
 import EmployeeInterface from "../interfaces/EmployeeInterface";
 import StatusOptions from "../interfaces/StatusOptions";
 import FinanceInterface from "../interfaces/FinanceInterface";
+import PageName from "../functions/PageName";
+import { GetItem, SetItem } from "../functions/ArrayData";
 
 export const SM = () => {
      const [tasks, setTasks] = useState<TaskInterface[]>([]);
@@ -13,14 +15,15 @@ export const SM = () => {
      const [finances, setFinances] = useState<FinanceInterface[]>([]);
 
      useEffect(() => {
-          const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+          const tasks = GetItem('tasks');
           setTasks(tasks);
-          const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+          const projects = GetItem('projects');
           setProjects(projects);
-          const employees = JSON.parse(localStorage.getItem('employees') || '[]');
+          const employees = GetItem('employees');
           setEmployees(employees);
-          const finances = JSON.parse(localStorage.getItem('finances') || '[]');
+          const finances = GetItem('finances');
           setFinances(finances);
+          PageName('SM');
      }, []);
 
      const [newTask, setNewTask] = useState('');
@@ -42,16 +45,16 @@ export const SM = () => {
           setNewTaskDescription('');
           setNewTaskProjectID('');
           setNewTaskEmployeeID('');
-          localStorage.setItem('tasks', JSON.stringify(tasks));
+          SetItem('tasks', tasks);
      };
 
      return (
           <div>
                <h1>SM</h1>
-               <ul>
+               <ul className="m-5">
                     {
-                         employees.map((employee: EmployeeInterface) => (
-                              <li key={employee.employee_id} className="bg-gray-50 m-3">
+                         employees.map((employee: EmployeeInterface, index) => (
+                              <li key={index} className="m-3">
                                    {employee.name}
                                    |
                                    {
@@ -64,10 +67,10 @@ export const SM = () => {
                          ))
                     }
                </ul>
-               <ul>
+               <ul className="m-5">
                     {
-                         projects.map((project: ProjectInterface) => (
-                              <li key={project.project_id} className="bg-blue-50 m-3">
+                         projects.map((project: ProjectInterface, index) => (
+                              <li key={index} className=" m-3">
                                    {project.name}
                                    |
                                    ({
@@ -88,9 +91,9 @@ export const SM = () => {
                          ))
                     }
                </ul>
-               <ul>
-                    {tasks.map((task: TaskInterface) => (
-                         <div key={task.task_id} className='flex flex-col bg-red-50 m-3'>
+               <ul className="m-5">
+                    {tasks.map((task: TaskInterface, index) => (
+                         <div key={index} className='flex flex-col  m-3'>
                               <p>{task.title}</p>
                               <p>{task.description}</p>
                               <p>{task.status}</p>
@@ -121,21 +124,21 @@ export const SM = () => {
                     <Select value={newTaskStatus} onChange={(e) => setNewTaskStatus(e.target.value)}>
                          <option value="">Select Status</option>
                          {
-                              StatusOptions.map((status: string) => (
-                                   <option value={status}>{status}</option>
+                              StatusOptions.map((status: string, index) => (
+                                   <option key={index} value={status}>{status}</option>
                               ))
                          }
                     </Select>
                     <Select value={newTaskProjectID} onChange={(e) => setNewTaskProjectID(e.target.value)}>
                          <option value="">Select Project</option>
-                         {projects.map((project: ProjectInterface) => (
-                              <option value={project.project_id}>{project.name}</option>
+                         {projects.map((project: ProjectInterface, index) => (
+                              <option key={index} value={project.project_id}>{project.name}</option>
                          ))}
                     </Select>
                     <Select value={newTaskEmployeeID} onChange={(e) => setNewTaskEmployeeID(e.target.value)}>
                          <option value="">Select Employee</option>
-                         {employees.map((employee: EmployeeInterface) => (
-                              <option value={employee.employee_id}>{employee.name}</option>
+                         {employees.map((employee: EmployeeInterface, index) => (
+                              <option key={index} value={employee.employee_id}>{employee.name}</option>
                          ))}
                     </Select>
                     <Button onClick={addTask}>

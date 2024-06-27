@@ -3,13 +3,14 @@ import employees from '../data/EmployeeData.json';
 import finances from '../data/FinanceData.json';
 import projects from '../data/ProjectData.json';
 import tasks from '../data/TaskData.json';
+import { SetItem } from '../functions/ArrayData';
 
 export const DataRefresh = () => {
     function saveData() {
-        localStorage.setItem('employees', JSON.stringify(employees));
-        localStorage.setItem('finances', JSON.stringify(finances));
-        localStorage.setItem('projects', JSON.stringify(projects));
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        SetItem('employees', employees);
+        SetItem('finances', finances);
+        SetItem('projects', projects);
+        SetItem('tasks', tasks);
     }
 
     return (
