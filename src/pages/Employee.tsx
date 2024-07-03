@@ -7,11 +7,11 @@ import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
 
 export const Employee = () => {
-    const [tasks, setTasks] = useState<TaskInterface[]>([]);
+    const [thisTasks, setThisTasks] = useState<TaskInterface[]>([]);
     const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
     const employee_id = 'e2';
 
-    useEffect(() => {
+    function getTasks() {
         const employees: EmployeeInterface[] = GetItem('employees');
         setEmployees(
             employees
@@ -19,25 +19,27 @@ export const Employee = () => {
                     (employee: EmployeeInterface) =>
                         employee.employee_id === employee_id
                 ));
-        const tasks: TaskInterface[] = GetItem('tasks');
-        setTasks(tasks
+        const allTasks: TaskInterface[] = GetItem('tasks');
+        setThisTasks(allTasks
             .filter(
                 (task: TaskInterface) =>
                     task.employee_id === employee_id
             ));
         PageName('Employee');
+    }
+
+    useEffect(() => {
+        getTasks();
     }, []);
 
     // function to change status
     const changeStatus = (task_id: number, status: string) => {
-        const newTasks = tasks.map((task: TaskInterface) => {
-            if (task.task_id === task_id) {
-                task.status = status;
-            }
-            return task;
-        });
-        setTasks(newTasks);
-        SetItem('tasks', newTasks);
+        const allTasks: TaskInterface[] = GetItem('tasks');
+        const changedTaskIndex = allTasks.findIndex((task: TaskInterface) => task.task_id === task_id);
+        allTasks[changedTaskIndex].status = status;
+        setThisTasks(allTasks);
+        SetItem('tasks', allTasks);
+        getTasks();
     };
 
     return (
@@ -53,7 +55,7 @@ export const Employee = () => {
             <h1>Tasks</h1>
             <ul>
                 {
-                    tasks
+                    thisTasks
                         .filter((task: TaskInterface) => task.status !== 'completed')
                         .map((task: TaskInterface) => (
                             <div key={task.task_id} className={`flex flex-col m-3 
@@ -76,7 +78,7 @@ export const Employee = () => {
                         ))
                 }
                 {
-                    tasks
+                    thisTasks
                         .filter((task: TaskInterface) => task.status === 'completed')
                         .map((task: TaskInterface) => (
                             <div key={task.task_id} className='flex flex-col m-3 '>

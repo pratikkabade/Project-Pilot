@@ -160,7 +160,7 @@ export const FM = () => {
 
                          <Button
                               onClick={addOtherExpense}
-                              disabled={!newProjectID && !newOtherExpense}
+                              disabled={!newProjectID}
                          >
                               Add Other Expense
                          </Button>
