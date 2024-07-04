@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Login } from "../pages/Login"
 import { AppNavbar } from "../components/layout/AppNavbar"
 import { PM } from "../pages/PM"
@@ -7,14 +7,17 @@ import { FM } from "../pages/FM"
 import { SM } from "../pages/SM"
 import { Employee } from "../pages/Employee"
 import { DataRefresh } from "../pages/DataRefresh"
-import { Button } from "flowbite-react"
+import { HomePage } from "../pages/Home"
 
 export const Route_Items = [
-    { name: "Login", link: "/", element: <Login /> },
+    { name: "Login", link: "/", element: <HomePage /> },
+    { name: "Login", link: "/home", element: <HomePage /> },
+    { name: "Login", link: "/login", element: <Login /> },
     { name: "PM", link: "/PM", element: <PM /> },
     { name: "FM", link: "/FM", element: <FM /> },
     { name: "SM", link: "/SM", element: <SM /> },
     { name: "Employee", link: "/Employee", element: <Employee /> },
+    { name: "Employee", link: "/e/*", element: <Employee /> },
     { name: "DataRefresh", link: "/DataRefresh", element: <DataRefresh /> },
 ]
 
@@ -31,7 +34,6 @@ export const AppRoutes = () => {
         <div>
             <BrowserRouter>
                 <AppNavbar />
-                <Link to='/'><Button color={'red'}>back</Button></Link>
                 <Routes>
                     {
                         Route_Items.map((item, index) => {
