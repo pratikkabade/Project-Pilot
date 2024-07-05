@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TaskInterface from "../interfaces/TaskInterface";
 import EmployeeInterface from "../interfaces/EmployeeInterface";
-import { Select } from "flowbite-react";
+import { Card, Select } from "flowbite-react";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
@@ -9,7 +9,7 @@ import { GetItem, SetItem } from "../functions/ArrayData";
 export const Employee = () => {
     const [thisTasks, setThisTasks] = useState<TaskInterface[]>([]);
     const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
-    const employee_id = 'e2';
+    const employee_id = GetItem('login_details').replace('/', '');
 
     function getTasks() {
         const employees: EmployeeInterface[] = GetItem('employees');
@@ -43,38 +43,48 @@ export const Employee = () => {
     };
 
     return (
-        <div>
-            <h1>Employee</h1>
-            <ul>
+        <div className="p-5">
+            <h1 className='text-5xl font-semibold'>Welcome back,
                 {employees.map((employee: EmployeeInterface) => (
-                    <li key={employee.employee_id}>
+                    <span key={employee.employee_id} className="ml-2 font-bold">
                         {employee.name}
-                    </li>
+                    </span>
                 ))}
-            </ul>
-            <h1>Tasks</h1>
-            <ul>
+            </h1>
+            <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
+            <div className="flex flex-row flex-wrap">
                 {
                     thisTasks
                         .filter((task: TaskInterface) => task.status !== 'completed')
                         .map((task: TaskInterface) => (
-                            <div key={task.task_id} className={`flex flex-col m-3 
+                            <Card key={task.task_id} className={`flex flex-col m-3 
                         ${task.status === 'in-progress' ? '' :
                                     task.status === 'pending' ? '' : ''} 
                         `}>
-                                {task.title} | {task.description} | {task.status}
-                                <Select
-                                    className='w-1/4'
-                                    value={task.status}
-                                    onChange={(e) => changeStatus(task.task_id, e.target.value)}
-                                >
-                                    {StatusOptions.map((status) => (
-                                        <option key={status} value={status}>
-                                            {status}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </div>
+
+
+                                <h3 className='text-xl font-normal'>
+                                    Task:
+                                    <span className='font-bold ml-2'>{task.title}</span>
+                                </h3>
+                                <h3 className='text-xl font-normal'>
+                                    Description:
+                                    <span className='font-bold ml-2'>{task.description}</span>
+                                </h3>
+                                <h3 className='text-xl font-normal'>
+                                    <Select
+                                        className=''
+                                        value={task.status}
+                                        onChange={(e) => changeStatus(task.task_id, e.target.value)}
+                                    >
+                                        {StatusOptions.map((status) => (
+                                            <option key={status} value={status}>
+                                                {status}
+                                            </option>
+                                        ))}
+                                    </Select>
+                                </h3>
+                            </Card>
                         ))
                 }
                 {
@@ -97,7 +107,7 @@ export const Employee = () => {
                             </div>
                         ))
                 }
-            </ul>
+            </div>
         </div>
     );
 };

@@ -67,51 +67,88 @@ export const FM = () => {
      }
 
      return (
-          <div>
-               <h1>FM</h1>
-               <ul>
+          <div className="p-5">
+               <h1 className='text-5xl font-bold'>Welcome back, FM</h1>
+               <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
+               <div className="flex flex-row flex-wrap">
                     {finances.map((finance: FinanceInterface) => (
-                         <li key={finance.project_id} className="m-5">
-                              {finance.amount}
-                              <ul>
+                         <Card key={finance.project_id} className="m-5">
+                              <h3 className='text-2xl font-semibold'>
                                    {
-                                        finance.other_expenses.reduce((acc, other_expense) => acc + other_expense.other_expenses_amount, 0)
+                                        projects.find(project => project.project_id === finance.project_id)?.name
                                    }
-                              </ul>
-                              <ul>
+                              </h3>
+                              <h3 className='text-xl font-normal'>
+                                   Funds available
+                                   <span className='font-bold ml-2'>{finance.amount}</span>
+                              </h3>
+                              <h3 className='text-xl font-normal'>
+                                   Funds utilized
+                                   <span className='font-bold ml-2'>
+                                        {
+                                             finance.other_expenses.reduce((acc, other_expense) => acc + other_expense.other_expenses_amount, 0)
+                                        }
+                                   </span>
+                              </h3>
+                              <div className="flex flex-row flex-wrap">
                                    {finance.other_expenses.map((other_expense, index) => (
-                                        <li className="m-3" key={index}>
-                                             {other_expense.other_expenses_name}
-                                             {other_expense.other_expenses_date}
-                                             {other_expense.other_expenses_description}
-                                             {other_expense.other_expenses_category}
-                                             {other_expense.other_expenses_status}
-                                             {other_expense.other_expenses_amount}
-                                        </li>
+                                        <Card className="m-3" key={index}>
+                                             <h3 className='text-lg font-normal'>
+                                                  Funds available
+                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_name}</span>
+                                             </h3>
+                                             <h3 className='text-lg font-normal'>
+                                                  Date
+                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_date}</span>
+                                             </h3>
+                                             <h3 className='text-lg font-normal'>
+                                                  Description:
+                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_description}</span>
+                                             </h3>
+                                             <h3 className='text-lg font-normal'>
+                                                  Category
+                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_category}</span>
+                                             </h3>
+                                             <h3 className='text-lg font-normal'>
+                                                  Payment Status
+                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_status}</span>
+                                             </h3>
+                                             <h3 className='text-lg font-normal'>
+                                                  Funds used
+                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_amount}</span>
+                                             </h3>
+                                        </Card>
                                    ))}
-                              </ul>
-                         </li>
+                              </div>
+                         </Card>
                     ))}
-               </ul>
-               <Card>
-                    <Select value={newProjectID} onChange={(e) => setnewProjectID(e.target.value)}>
-                         <option value="">Select Project</option>
-                         {projects.map((project: ProjectInterface, index) => (
-                              <option key={index} value={project.project_id}>{project.name}</option>
-                         ))}
-                    </Select>
-                    <TextInput
-                         type="number"
-                         value={newAmount}
-                         placeholder="Total Amount"
-                         onChange={(e) => setnewAmount(Number(e.target.value))}
-                    />
-                    <Button
-                         onClick={expenseChange}
-                         disabled={!newProjectID}>
-                         Add
-                    </Button>
-                    <Card>
+               </div>
+
+
+               <h2 className=' mt-10 text-2xl font-semibold'>Add-Manage</h2>
+
+               <div className="flex flow-row">
+                    <Card className="m-5">
+                         <Select value={newProjectID} onChange={(e) => setnewProjectID(e.target.value)}>
+                              <option value="">Select Project</option>
+                              {projects.map((project: ProjectInterface, index) => (
+                                   <option key={index} value={project.project_id}>{project.name}</option>
+                              ))}
+                         </Select>
+                         <TextInput
+                              type="number"
+                              value={newAmount}
+                              placeholder="Total Amount"
+                              onChange={(e) => setnewAmount(Number(e.target.value))}
+                         />
+                         <Button
+                              onClick={expenseChange}
+                              disabled={!newProjectID}>
+                              Add
+                         </Button>
+                    </Card>
+
+                    <Card className="m-5">
                          <TextInput
                               type="text"
                               placeholder="Other Expense"
@@ -165,7 +202,7 @@ export const FM = () => {
                               Add Other Expense
                          </Button>
                     </Card>
-               </Card>
-          </div>
+               </div>
+          </div >
      );
 };
