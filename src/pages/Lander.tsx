@@ -2,28 +2,27 @@ import { NavigationButton } from "../components/NavigationButton"
 
 export const Lander = () => {
     return (
-        <>
-
-            <div className="font-sans flex flex-col justify-end items-center w-full h-screen">
-                <div className="w-full text-center cursor-default">
-                    <h1 className="text-9xl max-lg:text-7xl max-sm:text-5xl font-extrabold animated-text">
+        <div className="font-sans cursor-default">
+            <div className="flex flex-col justify-end items-center w-full h-screen">
+                <div className="w-full text-center">
+                    <h1 className="text-9xl max-lg:text-7xl max-sm:text-5xl font-extrabold animated-text1">
                         Navigate your Projects to Success
                     </h1>
                     <p className="py-6 text-3xl">
                         Pro tools created with
-                        <span className="animated-text ml-2">developers</span>,
-                        <span className="animated-text mx-2">teams</span>and
-                        <span className="animated-text mx-2">businesses</span>
+                        <span className="animated-text1 ml-2">Developers</span>,
+                        <span className="animated-text1 mx-2">Teams</span>and
+                        <span className="animated-text1 mx-2">Businesses</span>
                         in mind
                     </p>
                 </div>
             </div>
 
-            <div className="font-sans page2">
+            <div className="section2">
                 <h1 className="text-7xl max-lg:text-5xl max-sm:text-3xl font-extrabold animated-text2">Minimize friction and increase productivity</h1>
                 <p className="py-6 text-3xl">
                     <span className="animated-text2 mr-2">Empower</span>your team and
-                    <span className="animated-text2 mx-2">succeed</span>as a business
+                    <span className="animated-text2 mx-2">Succeed</span>as a business
                 </p>
                 <div>
                     <NavigationButton />
@@ -32,7 +31,7 @@ export const Lander = () => {
 
 
             <div className="p-7">
-                <div className="page rounded-3xl flex flex-row flex-wrap p-5">
+                <div className="section3 rounded-3xl flex flex-row flex-wrap p-5">
                     <h1 className="text-white text-5xl max-md:text-4xl font-bold w-3/4">Project-Pilot provides an exceptional <span className="animated-text3">management experience</span></h1>
                     <div className="flex flex-row flex-wrap justify-between">
                         <div className="card">Project Managers</div>
@@ -42,6 +41,6 @@ export const Lander = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
