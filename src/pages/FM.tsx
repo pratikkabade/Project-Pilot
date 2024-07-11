@@ -5,6 +5,7 @@ import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
 import FinanceRange from "../components/FinanceRange";
+import { FundingStatus } from "../components/FundingStatus";
 
 export const FM = () => {
      const [finances, setFinances] = useState<FinanceInterface[]>([]);
@@ -18,31 +19,12 @@ export const FM = () => {
      }, []);
 
      const [newProjectID, setnewProjectID] = useState('');
-     const [newAmount, setnewAmount] = useState(0);
      const [newOtherExpense, setnewOtherExpense] = useState('');
      const [newDate, setnewDate] = useState('');
      const [newDescription, setnewDescription] = useState('');
      const [newCategory, setnewCategory] = useState('');
      const [newStatus, setnewStatus] = useState('');
      const [newOtherExpenseAmount, setnewOtherExpenseAmount] = useState(0);
-
-     const expenseChange = () => {
-          // copy existing finances
-          const financesCopy = [...finances];
-          const financeIndex = financesCopy.findIndex((finance) => finance.project_id === newProjectID);
-          if (financeIndex === -1) {
-               financesCopy.push({
-                    project_id: newProjectID,
-                    amount: newAmount,
-                    other_expenses: []
-               });
-          } else {
-               financesCopy[financeIndex].amount = newAmount;
-          }
-          setnewAmount(0);
-          setFinances(financesCopy);
-          SetItem('finances', financesCopy);
-     };
 
      const addOtherExpense = () => {
           const financeIndex = finances.findIndex((finance) => finance.project_id === newProjectID);
@@ -73,60 +55,58 @@ export const FM = () => {
                <div className="flex flex-row flex-wrap">
                     {finances.map((finance: FinanceInterface) => (
                          <div key={finance.project_id} className="card">
-                              <h3 className='text-2xl font-semibold'>
+                              <h3 className='text-2xl font-bold'>
                                    {
                                         projects.find(project => project.project_id === finance.project_id)?.name
                                    }
                               </h3>
-                              <h3 className='text-xl font-normal'>
-                                   Funds available
-                                   <span className='font-bold ml-2'>{finance.amount}</span>
+                              <FundingStatus item={finance} />
+                              <h3 className='text-xl'>
+                                   Other Expenses:
+                                   <b className="ml-2 px-2 py-1 bg-base-300 rounded-lg">{finance.other_expenses.length}</b>
                               </h3>
-                              <h3 className='text-xl font-normal'>
-                                   Funds utilized
-                                   <span className='font-bold ml-2'>
-                                        {
-                                             finance.other_expenses.reduce((acc, other_expense) => acc + other_expense.other_expenses_amount, 0)
-                                        }
-                                   </span>
-                              </h3>
-                              <div className="flex flex-row flex-wrap">
-                                   {finance.other_expenses.map((other_expense, index) => (
-                                        <div className="shadow-xl rounded-xl p-3 m-3 bg-base-300" key={index}>
-                                             <h3 className='text-lg font-normal'>
-                                                  Funds available
-                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_name}</span>
-                                             </h3>
-                                             <h3 className='text-lg font-normal'>
-                                                  Date
-                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_date}</span>
-                                             </h3>
-                                             <h3 className='text-lg font-normal'>
-                                                  Description:
-                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_description}</span>
-                                             </h3>
-                                             <h3 className='text-lg font-normal'>
-                                                  Category
-                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_category}</span>
-                                             </h3>
-                                             <h3 className='text-lg font-normal'>
-                                                  Payment Status
-                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_status}</span>
-                                             </h3>
-                                             <h3 className='text-lg font-normal'>
-                                                  Funds used
-                                                  <span className='font-bold ml-2'>{other_expense.other_expenses_amount}</span>
-                                             </h3>
-                                        </div>
-                                   ))}
-                              </div>
                          </div>
                     ))}
                </div>
 
+               <h2 className=' mt-10 text-2xl font-semibold'>Other Expenses Tracker</h2>
+               <div className="card !w-fit overflow-x-auto">
+                    <table className="table cursor-default text-xl">
+                         <thead>
+                              <tr className="text-xl">
+                                   <th>Project Name</th>
+                                   <th>Expense Title</th>
+                                   <th>Date</th>
+                                   <th>Description</th>
+                                   <th>Category</th>
+                                   <th>Status</th>
+                                   <th>Amount</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              {finances
+                                   .map((finance: FinanceInterface) =>
+                                        finance.other_expenses.map((exp, index) => (
+                                             <tr key={index} className="hover:bg-base-300 rounded-xl">
+                                                  <th>
+                                                       {
+                                                            projects.find(project => project.project_id === finance.project_id)?.name
+                                                       }
+                                                  </th>
+                                                  <td>{exp.other_expenses_name}</td>
+                                                  <td>{exp.other_expenses_date}</td>
+                                                  <td>{exp.other_expenses_description}</td>
+                                                  <td>{exp.other_expenses_category}</td>
+                                                  <td>{exp.other_expenses_status}</td>
+                                                  <td>{exp.other_expenses_amount}</td>
+                                             </tr>
+                                        )))}
+                         </tbody>
+                    </table>
+               </div>
+
 
                <h2 className=' mt-10 text-2xl font-semibold'>Add-Manage</h2>
-
                <div className="flex flow-row flex-wrap">
                     <div className="card">
                          <select
@@ -137,22 +117,6 @@ export const FM = () => {
                                    <option key={index} value={project.project_id}>{project.name}</option>
                               ))}
                          </select>
-                         <input
-                              className="input input-bordered"
-                              type="number"
-                              value={newAmount}
-                              placeholder="Total Amount"
-                              onChange={(e) => setnewAmount(Number(e.target.value))}
-                         />
-                         <button
-                              className="btn btn-primary"
-                              onClick={expenseChange}
-                              disabled={!newProjectID}>
-                              Add
-                         </button>
-                    </div>
-
-                    <div className="card">
                          <input
                               className="input input-bordered"
                               type="text"
@@ -235,13 +199,6 @@ export const FM = () => {
                               Add Other Expense
                          </button>
                     </div>
-
-
-
-
-
-
-
 
                     <div className="card">
                          {

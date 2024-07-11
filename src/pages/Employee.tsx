@@ -89,17 +89,16 @@ export const Employee = () => {
                         <h3 className='text-xl font-normal p-5 text-emerald-700 dark:text-emerald-400'>All Done</h3>
                 }
             </div>
-            <div className="collapse bg-base-300 mt-10 p-5">
-                <input type="checkbox" />
-                <h2 className='collapse-title text-xl font-semibold'>Show Archived</h2>
-                <div className="flex flex-row flex-wrap collapse-content">
+            <div className="bg-green-50 dark:bg-green-900 rounded-3xl mt-10 p-5">
+                <h2 className='collapse-title text-xl text-success font-semibold'>Completed</h2>
+                <div className="flex flex-row flex-wrap">
                     {
                         thisTasks
                             .filter((task: TaskInterface) => task.status === 'completed').length !== 0 ?
                             thisTasks
                                 .filter((task: TaskInterface) => task.status === 'completed')
                                 .map((task: TaskInterface) => (
-                                    <div key={task.task_id} className={`card m-3`}>
+                                    <div key={task.task_id} className={`card border-2 !border-green-400 m-3`}>
                                         <h3 className='text-xl font-normal'>
                                             Task:
                                             <span className='font-bold ml-2'>{task.title}</span>

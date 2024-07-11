@@ -6,6 +6,9 @@ import StatusOptions from "../interfaces/StatusOptions";
 import FinanceInterface from "../interfaces/FinanceInterface";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
+import { FundingStatus } from "../components/FundingStatus";
+import { SMTable } from "../components/SMTable";
+import { AppDropDown } from "../components/AppDropDown";
 
 export const SM = () => {
      const [tasks, setTasks] = useState<TaskInterface[]>([]);
@@ -54,6 +57,8 @@ export const SM = () => {
           return totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
      }
 
+     const checkProjectStatus = (project: any) => tasks.filter((task: TaskInterface) => task.project_id === project.project_id && task.status === 'completed').length === tasks.filter((task: TaskInterface) => task.project_id === project.project_id).length ? 'Completed' : 'Pending'
+
      return (
           <div className="p-5">
                <h1 className='text-5xl font-bold'>Welcome back, SM</h1>
@@ -93,8 +98,12 @@ export const SM = () => {
                     {
                          projects.map((project: ProjectInterface, index) => (
                               <div key={index} className="card">
-                                   <h3 className='text-2xl font-semibold'>
+                                   <h3 className='text-2xl font-bold'>
                                         {project.name}
+
+                                        <span className={`font-semibold ml-2 ${checkProjectStatus(project) === "Completed" ? 'text-success' : 'text-warning'}`}>
+                                             {checkProjectStatus(project)}
+                                        </span>
                                    </h3>
                                    <h3 className='text-xl font-normal'>
                                         Completed tasks:
@@ -107,70 +116,14 @@ export const SM = () => {
                                              })
                                         </span>
                                    </h3>
-                                   <h3 className='text-xl font-normal'>
-                                        Project Status:
-                                        <span className='font-bold ml-2'>
-                                             {
-                                                  tasks.filter((task: TaskInterface) => task.project_id === project.project_id && task.status === 'completed').length === tasks.filter((task: TaskInterface) => task.project_id === project.project_id).length ? 'Completed' : 'Pending'
-                                             }
-                                        </span>
-                                   </h3>
-                                   <h3 className='text-xl font-normal'>
-                                        Funds Allocated:
-                                        <span className='font-bold ml-2'>
-                                             {
-                                                  finances.find((finance: FinanceInterface) => finance.project_id === project.project_id)?.amount
-                                             }
-                                        </span>
-                                   </h3>
-
+                                   <FundingStatus item={project} />
                               </div>
                          ))
                     }
                </div>
 
 
-               <h2 className=' mt-10 text-2xl font-semibold'>Tasks insight</h2>
-               <div className="flex flex-row flex-wrap">
-                    {tasks.map((task: TaskInterface, index) => (
-                         <div key={index} className='card'>
-                              <h3 className='text-xl font-normal'>
-                                   Task:
-                                   <span className='font-bold ml-2'>
-                                        {task.title}
-                                   </span>
-                              </h3>
-                              <h3 className='text-xl font-normal'>
-                                   Description:
-                                   <span className='font-bold ml-2'>
-                                        {task.description}
-                                   </span>
-                              </h3>
-                              <h3 className='text-xl font-normal'>
-                                   Task Status:
-                                   <span className='font-bold ml-2'>
-                                        {task.status}
-                                   </span>
-                              </h3>
-                              <h3 className='text-xl font-normal'>
-                                   Parent Project:
-                                   <span className='font-bold ml-2'>
-                                        {
-                                             projects.find((project: ProjectInterface) => project.project_id === task.project_id)?.name
-                                        }
-                                   </span>
-                              </h3>
-                              <h3 className='text-xl font-normal'>
-                                   Assigned to:
-                                   <span className='font-bold ml-2'>
-                                        {
-                                             employees.find((employee: EmployeeInterface) => employee.employee_id === task.employee_id)?.name
-                                        }
-                                   </span>
-                              </h3>
-                         </div>
-                    ))}
-               </div>
+               <SMTable />
 
 
                <h2 className=' mt-10 text-2xl font-semibold'>Create Tasks</h2>
