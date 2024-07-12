@@ -9,10 +9,12 @@ import { Employee } from "../pages/Employee"
 import { DataRefresh } from "../pages/DataRefresh"
 import { Lander } from "../pages/Lander"
 import { AppFooter } from "../components/layout/AppFooter"
+import { Dashboard } from "../pages/Dashboard"
 
 export const Route_Items = [
     { name: "Login", link: "/", element: <Lander /> },
     { name: "Login", link: "/home", element: <Lander /> },
+    { name: "Login", link: "/dashboard", element: <Dashboard /> },
     { name: "Login", link: "/login", element: <Login /> },
     { name: "PM", link: "/PM", element: <PM /> },
     { name: "FM", link: "/FM", element: <FM /> },
