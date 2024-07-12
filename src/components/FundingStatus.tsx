@@ -31,7 +31,7 @@ export const FundingStatus = ({ item }: any) => {
                     ${(otherExpensesOfProject(item) / maxExpensesOfProject(item)) * 100 > 100 ? 'text-error' :
                                     (otherExpensesOfProject(item) / maxExpensesOfProject(item)) * 100 === 100 ? 'text-accent' :
                                         (otherExpensesOfProject(item) / maxExpensesOfProject(item)) * 100 > 80 ? 'text-warning' : 'text-success'}`}>
-                                {maxExpensesOfProject(item) - otherExpensesOfProject(item)}
+                                {otherExpensesOfProject(item)}
                                 <span className='ml-1'>utilized</span>
                             </span>
                             <span className='ml-1 text-2xl font-semibold'>

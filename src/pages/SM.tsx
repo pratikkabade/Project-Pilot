@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import TaskInterface from "../interfaces/TaskInterface";
 import ProjectInterface from "../interfaces/ProjectInterface";
 import EmployeeInterface from "../interfaces/EmployeeInterface";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
-import { FundingStatus } from "../components/FundingStatus";
 import { SMTable } from "../components/SMTable";
 
 export const SM = () => {
      const [tasks, setTasks] = useState<TaskInterface[]>([]);
      const [projects, setProjects] = useState<ProjectInterface[]>([]);
      const [employees, setEmployees] = useState<EmployeeInterface[]>([]);
+
+     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
 
      useEffect(() => {
           const tasks = GetItem('tasks');
@@ -21,7 +22,8 @@ export const SM = () => {
           const employees = GetItem('employees');
           setEmployees(employees);
           PageName('SM');
-     }, []);
+          forceUpdate();
+     }, [ignored]);
 
      const [newTask, setNewTask] = useState('');
      const [newTaskDescription, setNewTaskDescription] = useState('');
@@ -45,14 +47,24 @@ export const SM = () => {
           SetItem('tasks', tasks);
      };
 
-     function calculateTaskCompletionRate(tasks: TaskInterface[], employeeId: string): number {
+     function calculateTaskCompletionRateEMP(tasks: TaskInterface[], employeeId: string): number {
           const employeeTasks = tasks.filter(task => task.employee_id === employeeId);
           const completedTasks = employeeTasks.filter(task => task.status === 'completed').length;
           const totalTasks = employeeTasks.length;
           return totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
      }
 
+     function calculateTaskCompletionRatePROJ(tasks: TaskInterface[], projectId: string): number {
+          const employeeTasks = tasks.filter(task => task.project_id === projectId);
+          const completedTasks = employeeTasks.filter(task => task.status === 'completed').length;
+          const totalTasks = employeeTasks.length;
+          return totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+     }
+
      const checkProjectStatus = (project: any) => tasks.filter((task: TaskInterface) => task.project_id === project.project_id && task.status === 'completed').length === tasks.filter((task: TaskInterface) => task.project_id === project.project_id).length ? 'Completed' : 'Pending'
+
+     const checkEmployeeStatus = (employee: any) => tasks.filter((task: TaskInterface) => task.employee_id === employee.employee_id && task.status === 'completed').length === tasks.filter((task: TaskInterface) => task.employee_id === employee.employee_id).length ? 'Completed' : 'Pending'
+
 
      return (
           <div className="p-5">
@@ -66,22 +78,19 @@ export const SM = () => {
                               <div key={index} className="card m-3">
                                    <h3 className='text-2xl font-semibold'>
                                         {employee.name}
-                                   </h3>
-                                   <h3 className='text-xl font-normal'>
-                                        Task Status:
-                                        <span className='font-bold ml-2'>
-                                             (
-                                             {
-                                                  tasks.filter((task: TaskInterface) => task.employee_id === employee.employee_id && task.status === 'completed').length
-                                             }/
-                                             {
-                                                  tasks.filter((task: TaskInterface) => task.employee_id === employee.employee_id).length
-                                             }
-                                             )
+                                        <span className={`font-semibold ${checkEmployeeStatus(employee) === "Completed" ? 'text-success' : 'text-warning'}`}>
+                                             <span className='text-xl font-bold ml-2'>
+                                                  ({
+                                                       tasks.filter((task: TaskInterface) => task.employee_id === employee.employee_id && task.status === 'completed').length
+                                                  }/
+                                                  {
+                                                       tasks.filter((task: TaskInterface) => task.employee_id === employee.employee_id).length
+                                                  })
+                                             </span>
                                         </span>
                                    </h3>
-                                   <progress className="progress progress-primary w-56" value={
-                                        calculateTaskCompletionRate(tasks, employee.employee_id)
+                                   <progress className={`progress w-56 ${checkEmployeeStatus(employee) === "Completed" ? 'progress-success' : 'progress-warning'}`} value={
+                                        calculateTaskCompletionRateEMP(tasks, employee.employee_id)
                                    } max="100"></progress>
                               </div>
                          ))
@@ -95,23 +104,20 @@ export const SM = () => {
                               <div key={index} className="card">
                                    <h3 className='text-2xl font-bold'>
                                         {project.name}
-
-                                        <span className={`font-semibold ml-2 ${checkProjectStatus(project) === "Completed" ? 'text-success' : 'text-warning'}`}>
-                                             {checkProjectStatus(project)}
+                                        <span className={`font-semibold ${checkProjectStatus(project) === "Completed" ? 'text-success' : 'text-warning'}`}>
+                                             <span className='text-xl font-bold ml-2'>
+                                                  ({
+                                                       tasks.filter((task: TaskInterface) => task.project_id === project.project_id && task.status === 'completed').length
+                                                  }/
+                                                  {
+                                                       tasks.filter((task: TaskInterface) => task.project_id === project.project_id).length
+                                                  })
+                                             </span>
                                         </span>
                                    </h3>
-                                   <h3 className='text-xl font-normal'>
-                                        Completed tasks:
-                                        <span className='font-bold ml-2'>
-                                             ({
-                                                  tasks.filter((task: TaskInterface) => task.project_id === project.project_id && task.status === 'completed').length
-                                             }/
-                                             {
-                                                  tasks.filter((task: TaskInterface) => task.project_id === project.project_id).length
-                                             })
-                                        </span>
-                                   </h3>
-                                   <FundingStatus item={project} />
+                                   <progress className={`progress w-56 ${checkProjectStatus(project) === "Completed" ? 'progress-success' : 'progress-warning'}`} value={
+                                        calculateTaskCompletionRatePROJ(tasks, project.project_id)
+                                   } max="100"></progress>
                               </div>
                          ))
                     }

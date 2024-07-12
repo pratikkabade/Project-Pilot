@@ -1,5 +1,5 @@
 import FinanceInterface from "../interfaces/FinanceInterface";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import ProjectInterface from "../interfaces/ProjectInterface";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
@@ -10,13 +10,17 @@ import { FundingStatus } from "../components/FundingStatus";
 export const FM = () => {
      const [finances, setFinances] = useState<FinanceInterface[]>([]);
      const [projects, setProjects] = useState<ProjectInterface[]>([]);
+
+     const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
+     
      useEffect(() => {
           const finances = GetItem('finances');
           setFinances(finances);
           const projects = GetItem('projects');
           setProjects(projects);
           PageName('FM');
-     }, []);
+          forceUpdate();
+     }, [ignored]);
 
      const [newProjectID, setnewProjectID] = useState('');
      const [newOtherExpense, setnewOtherExpense] = useState('');
@@ -70,7 +74,7 @@ export const FM = () => {
                </div>
 
                <h2 className=' mt-10 text-2xl font-semibold'>Other Expenses Tracker</h2>
-               <div className="card !w-fit overflow-x-auto">
+               <div className="card card-table !w-fit overflow-x-auto">
                     <table className="table cursor-default text-xl">
                          <thead>
                               <tr className="text-xl">
