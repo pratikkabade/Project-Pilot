@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PageName from "../functions/PageName";
 import { Lander } from "./Lander"
 import { GetItem } from "../functions/ArrayData";
@@ -8,7 +8,7 @@ import { FM } from "./FM";
 import { Employee } from "./Employee";
 
 export const Dashboard = () => {
-     const [id, setId] = useState(GetItem('login_details'));
+     const id = GetItem('login_details');
      useEffect(() => {
           PageName('Project-Pilot')
           console.log(`ID has changed to: ${id}`);
