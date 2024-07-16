@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SetItem } from '../functions/ArrayData';
+import { SetItem } from '../../functions/ArrayData';
 
 // Assuming this component receives `projects` and `finances` as props
 const FinanceRange = ({ projects, finances: initialFinances, totalExpenses }: { projects: any[], finances: any[], totalExpenses: number }) => {

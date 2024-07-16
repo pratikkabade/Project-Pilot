@@ -4,15 +4,16 @@ import ProjectInterface from "../interfaces/ProjectInterface";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
-import FinanceRange from "../components/FinanceRange";
-import { FundingStatus } from "../components/FundingStatus";
+import FinanceRange from "../components/fm/FinanceRange";
+import { FundingStatus } from "../components/fm/FundingStatus";
+import { FMTable } from "../components/fm/FMTable";
 
 export const FM = () => {
      const [finances, setFinances] = useState<FinanceInterface[]>([]);
      const [projects, setProjects] = useState<ProjectInterface[]>([]);
 
      const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
-     
+
      useEffect(() => {
           const finances = GetItem('finances');
           setFinances(finances);
@@ -73,41 +74,7 @@ export const FM = () => {
                     ))}
                </div>
 
-               <h2 className=' mt-10 text-2xl font-semibold'>Other Expenses Tracker</h2>
-               <div className="card card-table !w-fit overflow-x-auto">
-                    <table className="table cursor-default text-xl">
-                         <thead>
-                              <tr className="text-xl">
-                                   <th>Project Name</th>
-                                   <th>Expense Title</th>
-                                   <th>Date</th>
-                                   <th>Description</th>
-                                   <th>Category</th>
-                                   <th>Status</th>
-                                   <th>Amount</th>
-                              </tr>
-                         </thead>
-                         <tbody>
-                              {finances
-                                   .map((finance: FinanceInterface) =>
-                                        finance.other_expenses.map((exp, index) => (
-                                             <tr key={index} className="hover:bg-base-300 rounded-xl">
-                                                  <th>
-                                                       {
-                                                            projects.find(project => project.project_id === finance.project_id)?.name
-                                                       }
-                                                  </th>
-                                                  <td>{exp.other_expenses_name}</td>
-                                                  <td>{exp.other_expenses_date}</td>
-                                                  <td>{exp.other_expenses_description}</td>
-                                                  <td>{exp.other_expenses_category}</td>
-                                                  <td>{exp.other_expenses_status}</td>
-                                                  <td>{exp.other_expenses_amount}</td>
-                                             </tr>
-                                        )))}
-                         </tbody>
-                    </table>
-               </div>
+               <FMTable />
 
 
                <h2 className=' mt-10 text-2xl font-semibold'>Add-Manage</h2>

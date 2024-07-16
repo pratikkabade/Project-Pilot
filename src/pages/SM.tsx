@@ -5,7 +5,7 @@ import EmployeeInterface from "../interfaces/EmployeeInterface";
 import StatusOptions from "../interfaces/StatusOptions";
 import PageName from "../functions/PageName";
 import { GetItem, SetItem } from "../functions/ArrayData";
-import { SMTable } from "../components/SMTable";
+import { SMTable } from "../components/sm/SMTable";
 
 export const SM = () => {
      const [tasks, setTasks] = useState<TaskInterface[]>([]);

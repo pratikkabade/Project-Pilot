@@ -1,4 +1,4 @@
-import { GetItem } from "../functions/ArrayData";
+import { GetItem } from "../../functions/ArrayData";
 
 export const FundingStatus = ({ item }: any) => {
     const finances = GetItem('finances');

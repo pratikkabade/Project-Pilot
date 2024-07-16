@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import TaskInterface from "../interfaces/TaskInterface";
-import ProjectInterface from "../interfaces/ProjectInterface";
-import EmployeeInterface from "../interfaces/EmployeeInterface";
-import StatusOptions from "../interfaces/StatusOptions";
-import PageName from "../functions/PageName";
-import { GetItem, SetItem } from "../functions/ArrayData";
+import TaskInterface from "../../interfaces/TaskInterface";
+import ProjectInterface from "../../interfaces/ProjectInterface";
+import EmployeeInterface from "../../interfaces/EmployeeInterface";
+import StatusOptions from "../../interfaces/StatusOptions";
+import PageName from "../../functions/PageName";
+import { GetItem, SetItem } from "../../functions/ArrayData";
 
 export const SMTable = () => {
      const [projects, setProjects] = useState<ProjectInterface[]>([]);
@@ -24,14 +24,13 @@ export const SMTable = () => {
           setEmployees(employees);
           const allTasks: TaskInterface[] = GetItem('tasks');
           setThisTasks(allTasks);
+          const projects = GetItem('projects');
+          setProjects(projects);
+          PageName('SM');
      }
 
      useEffect(() => {
           getTasks();
-
-          const projects = GetItem('projects');
-          setProjects(projects);
-          PageName('SM');
      }, []);
 
 

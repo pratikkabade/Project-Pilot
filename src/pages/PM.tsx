@@ -3,7 +3,7 @@ import ProjectInterface from '../interfaces/ProjectInterface';
 import EmployeeInterface from '../interfaces/EmployeeInterface';
 import PageName from '../functions/PageName';
 import { GetItem, SetItem } from '../functions/ArrayData';
-import { FundingStatus } from '../components/FundingStatus';
+import { FundingStatus } from '../components/fm/FundingStatus';
 
 export const PM = () => {
      const projects = GetItem('projects');
