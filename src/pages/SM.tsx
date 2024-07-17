@@ -25,6 +25,18 @@ export const SM = () => {
           forceUpdate();
      }, [ignored]);
 
+     const [animations, setAnimations] = useState(false)
+     function startAnimations() {
+          setAnimations(true);
+          setTimeout(() => {
+               setAnimations(false)
+          }, 1500);
+     }
+     useEffect(() => {
+          startAnimations();
+     }, [])
+
+
      const [newTask, setNewTask] = useState('');
      const [newTaskDescription, setNewTaskDescription] = useState('');
      const [newTaskProjectID, setNewTaskProjectID] = useState('');
@@ -75,7 +87,7 @@ export const SM = () => {
                <div className="flex flex-row flex-wrap">
                     {
                          employees.map((employee: EmployeeInterface, index) => (
-                              <div key={index} className="card m-3">
+                              <div key={index} className={`card m-3 ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
                                    <h3 className='text-2xl font-semibold'>
                                         {employee.name}
                                         <span className={`font-semibold ${checkEmployeeStatus(employee) === "Completed" ? 'text-success' : 'text-warning'}`}>
@@ -101,7 +113,7 @@ export const SM = () => {
                <div className="flex flex-row flex-wrap">
                     {
                          projects.map((project: ProjectInterface, index) => (
-                              <div key={index} className="card">
+                              <div key={index} className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
                                    <h3 className='text-2xl font-bold'>
                                         {project.name}
                                         <span className={`font-semibold ${checkProjectStatus(project) === "Completed" ? 'text-success' : 'text-warning'}`}>
@@ -129,7 +141,7 @@ export const SM = () => {
 
                <h2 className=' mt-10 text-2xl font-semibold'>Create Tasks</h2>
                <div className="flex flex-row">
-                    <div className="card">
+                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
                          <input
                               type="text"
                               placeholder="Title"

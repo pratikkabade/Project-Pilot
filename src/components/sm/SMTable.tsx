@@ -98,10 +98,22 @@ export const SMTable = () => {
      const findProjectID = (project_name: string) => projects
           .find((project: ProjectInterface) => project.name === project_name)?.project_id || ''
 
+     const [animations, setAnimations] = useState(false)
+     function startAnimations() {
+          setAnimations(true);
+          setTimeout(() => {
+               setAnimations(false)
+          }, 1500);
+     }
+     useEffect(() => {
+          startAnimations();
+     }, [])
+
+
      return (
           <div>
                <h2 className=' mt-10 text-2xl font-semibold'>Tasks insight</h2>
-               <div className="card card-table">
+               <div className={`card card-table ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
                     <table className="table cursor-default text-xl">
                          <thead>
                               <tr className="text-xl">
@@ -226,7 +238,7 @@ export const SMTable = () => {
                                              </th>
                                              <td>
                                                   <select
-                                                       className='select select-bordered w-full'
+                                                       className='select text-base select-bordered w-full'
                                                        value={findEmployee(task)}
                                                        onChange={(e) => changeEmployee(task.task_id, e.target.value)}
                                                   >

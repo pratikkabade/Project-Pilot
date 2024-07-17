@@ -72,7 +72,7 @@ export const Login = () => {
      };
 
      return (
-          <div className="h-screen flex justify-center items-center font-sans">
+          <div className="h-screen abc flex justify-center items-center font-sans">
                <div className={`flex p-10 justify-between items-center ${animations ? 'skeleton' : 'bg-base-100'} rounded-3xl w-3/4 max-lg:w-full flex-row max-md:flex-col h-fit`}>
                     <div className="branding font-bold flex flex-col items-end max-md:flex-row max-md:items-center max-md:w-full">
                          <LogoSVG size={80} />

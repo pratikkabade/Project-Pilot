@@ -41,6 +41,18 @@ export const Employee = () => {
         getTasks();
     };
 
+    const [animations, setAnimations] = useState(false)
+    function startAnimations() {
+        setAnimations(true);
+        setTimeout(() => {
+            setAnimations(false)
+        }, 1500);
+    }
+    useEffect(() => {
+        startAnimations();
+    }, [])
+
+
     return (
         <div className="p-5">
             <h1 className='text-5xl font-semibold'>Welcome back,
@@ -58,7 +70,7 @@ export const Employee = () => {
                         thisTasks
                             .filter((task: TaskInterface) => task.status !== 'completed')
                             .map((task: TaskInterface) => (
-                                <div key={task.task_id} className={`card flex flex-col m-3 
+                                <div key={task.task_id} className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'} flex flex-col m-3 
                         ${task.status === 'in-progress' ? 'bg-yellow-50 dark:bg-yellow-900' :
                                         task.status === 'pending' ? 'bg-red-50 dark:bg-red-950' : ''} 
                         `}>
@@ -98,7 +110,7 @@ export const Employee = () => {
                             thisTasks
                                 .filter((task: TaskInterface) => task.status === 'completed')
                                 .map((task: TaskInterface) => (
-                                    <div key={task.task_id} className={`card border-2 !border-green-400 m-3`}>
+                                    <div key={task.task_id} className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'} border-2 !border-green-400 m-3`}>
                                         <h3 className='text-xl font-normal'>
                                             Task:
                                             <span className='font-bold ml-2'>{task.title}</span>

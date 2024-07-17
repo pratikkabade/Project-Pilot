@@ -111,11 +111,23 @@ export const FMTable = () => {
           );
      };
 
+     const [animations, setAnimations] = useState(false)
+     function startAnimations() {
+          setAnimations(true);
+          setTimeout(() => {
+               setAnimations(false)
+          }, 1500);
+     }
+     useEffect(() => {
+          startAnimations();
+     }, [])
+
      return (
           <div>
                <h2 className='mt-10 text-2xl font-semibold'>Other Expenses Tracker</h2>
-               <div className="card card-table !w-fit overflow-x-auto">
+               <div className={`card card-table !w-fit overflow-x-auto ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
                     <table className="table cursor-default text-xl">
+
                          <thead>
                               <tr className="text-xl">
                                    <th>Project Name</th>
