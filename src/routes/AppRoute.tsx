@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Login } from "../pages/Login"
 import { AppNavbar } from "../components/layout/AppNavbar"
@@ -10,6 +9,7 @@ import { DataRefresh } from "../pages/DataRefresh"
 import { Lander } from "../pages/Lander"
 import { AppFooter } from "../components/layout/AppFooter"
 import { Dashboard } from "../pages/Dashboard"
+import { About } from "../pages/About"
 
 export const Route_Items = [
     { name: "Login", link: "/", element: <Lander /> },
@@ -22,6 +22,7 @@ export const Route_Items = [
     { name: "Employee", link: "/Employee", element: <Employee /> },
     { name: "Employee", link: "/e/*", element: <Employee /> },
     { name: "DataRefresh", link: "/DataRefresh", element: <DataRefresh /> },
+    { name: "About", link: "/About", element: <About /> },
 ]
 
 export const ALL_Items = [
@@ -49,7 +50,7 @@ export const AppRoutes = () => {
                         })
                     }
                 </Routes>
-<AppFooter />
+                <AppFooter />
             </BrowserRouter>
         </div>
     )
