@@ -45,6 +45,57 @@
 }
 
 
+.notice h1 {
+    margin-top: 2.5rem;
+    font-size: 2.25rem
+        /* 36px */
+    ;
+    line-height: 2.5rem
+        /* 40px */
+    ;
+}
+
+.notice i{
+    --tw-bg-opacity: 1;
+    background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
+    border-radius: 0.5rem /* 8px */;
+    padding: 0.125rem /* 2px */;
+    padding-left: 0.375rem /* 6px */;
+    padding-right: 0.375rem /* 6px */;
+    cursor: default;
+}
+.notice i:hover{
+    text-decoration: underline;
+}
+.notice p {
+    margin-top: 1rem;
+    font-size: 1.25rem
+        /* 20px */
+    ;
+    line-height: 1.75rem
+        /* 28px */
+    ;
+}
+
+@media not all and (min-width: 640px) {
+    .notice h1 {
+        font-size: 1.5rem
+            /* 24px */
+        ;
+        line-height: 2rem
+            /* 32px */
+        ;
+    }
+
+    .notice p {
+        font-size: 1.125rem
+            /* 18px */
+        ;
+        line-height: 1.75rem
+            /* 28px */
+        ;
+    }
+}
 
 
 
@@ -169,7 +220,7 @@
 
 @media screen and (max-width: 1000px) {
     .section3 .card {
-        width: 10rem;
+        width: 15rem;
     }
 }
 
@@ -178,6 +229,25 @@
         width: 100% !important;
     }
 }
+
+.section3 .card h1{
+    font-size: 2.25rem
+        /* 36px */
+    ;
+    line-height: 2.5rem
+        /* 40px */
+    ;
+}
+.section3 .card p{
+    font-size: 1.25rem
+        /* 20px */
+    ;
+    line-height: 1.75rem
+        /* 28px */
+    ;
+}
+
+
 
 .animated-text3 {
     background-image: linear-gradient(225deg, #ffd3ec 0%, #e4c1ff 50%, #d0ebff 100%);
@@ -189,7 +259,20 @@
 
 
 
-.slide-up progress, .slide-up h1,.slide-up h2,.slide-up h3,.slide-up h4,.slide-up h5,.slide-up h6,.slide-up th,.slide-up td,.slide-up tr,.slide-up p,.slide-up input,.slide-up select,.slide-up button {
+.slide-up progress,
+.slide-up h1,
+.slide-up h2,
+.slide-up h3,
+.slide-up h4,
+.slide-up h5,
+.slide-up h6,
+.slide-up th,
+.slide-up td,
+.slide-up tr,
+.slide-up p,
+.slide-up input,
+.slide-up select,
+.slide-up button {
     animation: slide-up 1s forwards;
 }
 
@@ -201,4 +284,85 @@
     100% {
         transform: translateY(0);
     }
+}
+
+
+
+
+
+
+
+
+.section4 {
+    margin: 0;
+    background-image: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    background-size: 300% 300%;
+    animation: gradientAnimation 12s ease infinite;
+    padding: 3rem 1rem; /* Add padding for spacing */
+}
+
+.section4 .card {
+    padding: 24px;
+    background-color: #ffffff; /* Clean white background */
+    border: 1px solid #e0e0e0; /* Subtle border */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    width: 22rem;
+    height: fit-content;
+    color: #333; /* Dark text for readability */
+    font-size: large;
+    font-weight: 600;
+}
+
+.section4 .card:hover {
+    transform: translateY(-10px) scale(1.05); /* Lift effect */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    background-color: #f9f9f9; /* Slight background color change on hover */
+}
+
+@media screen and (max-width: 1000px) {
+    .section4 .card {
+        width: 18rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .section4 .card {
+        width: 100% !important;
+    }
+}
+
+.section4 .card h1 {
+    font-size: 2.25rem; /* 36px */
+    line-height: 2.5rem; /* 40px */
+    color: #333; /* Dark text color for better readability */
+    margin-bottom: 0.5rem; /* Space below heading */
+    transition: color 0.3s ease;
+}
+
+.section4 .card p {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+    color: #666; /* Slightly lighter text color */
+    transition: color 0.3s ease;
+}
+
+.section4 .card:hover h1,
+.section4 .card:hover p {
+    color: #007bff; /* Highlight text color on hover */
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+.animated-text4 {
+    background-image: linear-gradient(135deg, #921dff 0%, #0582ff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 12s ease infinite;
 }
