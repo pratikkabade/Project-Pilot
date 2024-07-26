@@ -258,7 +258,7 @@
 }
 
 
-
+.slide-up,
 .slide-up progress,
 .slide-up h1,
 .slide-up h2,
@@ -278,7 +278,7 @@
 
 @keyframes slide-up {
     0% {
-        transform: translateY(50%);
+        transform: translateY(15%);
     }
 
     100% {

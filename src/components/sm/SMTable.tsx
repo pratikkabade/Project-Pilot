@@ -113,7 +113,7 @@ export const SMTable = () => {
      return (
           <div>
                <h2 className=' mt-10 text-2xl font-semibold'>Tasks insight</h2>
-               <div className={`card card-table ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+               <div className={`card card-table ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                     <table className="table cursor-default text-xl">
                          <thead>
                               <tr className="text-xl">

@@ -70,9 +70,9 @@ export const PM = () => {
                <h1 className='text-5xl font-bold'>Welcome back, PM</h1>
                <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
                <div className='flex flex-row flex-wrap'>
-                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'} !w-fit shadow-xl p-5 gap-4 flex flex-col m-5`}>
+                    <div className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'} !w-fit shadow-xl p-5 gap-4 flex flex-col m-5`}>
                          <h3 className='text-2xl font-semibold'>Finances</h3>
-                         <div className='flex flex-row justify-center items-center'>
+                         <div className='flex flex-row max-sm:flex-col justify-center items-center'>
                               <div className='border-base-300 border-2 rounded-xl p-2 m-2 flex flex-col justify-center items-center'>
                                    <h3 className={`text-xl font-bold flex flex-col`}>
                                         Funds Available
@@ -99,7 +99,7 @@ export const PM = () => {
                               </div>
                          </div>
                     </div>
-                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                    <div className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                          <h3 className='text-2xl font-semibold'>Employees</h3>
                          <h3 className='text-xl font-normal flex flex-col'>
                               <span>
@@ -114,7 +114,7 @@ export const PM = () => {
                                         (employeesWithCompletedTasks.length / employeesCount) * 100
                                    } max={100}></progress>
                     </div>
-                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                    <div className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                          <h3 className='text-2xl font-semibold'>Tasks</h3>
                          <h3 className='text-xl font-normal'>
                               Completed Tasks:
@@ -136,7 +136,7 @@ export const PM = () => {
                <h2 className=' mt-10 text-2xl font-semibold'>Project Details</h2>
                <div className='flex flex-row flex-wrap'>
                     {projects.map((project: ProjectInterface) => (
-                         <div key={project.project_id} className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                         <div key={project.project_id} className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                               <h3 className='text-2xl font-semibold'>{project.name}</h3>
                               <h3 className='text-xl font-normal'>
                                    Completed Tasks:
@@ -193,7 +193,7 @@ export const PM = () => {
                <h2 className=' mt-10 text-2xl font-semibold'>Add Project</h2>
 
                <div className='flex flex-row'>
-                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                    <div className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                          <input
                               type="text"
                               placeholder='Add a new project'

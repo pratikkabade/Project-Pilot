@@ -125,7 +125,7 @@ export const FMTable = () => {
      return (
           <div>
                <h2 className='mt-10 text-2xl font-semibold'>Other Expenses Tracker</h2>
-               <div className={`card card-table !w-fit overflow-x-auto ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+               <div className={`card card-table !w-fit overflow-x-auto ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                     <table className="table cursor-default text-xl">
 
                          <thead>

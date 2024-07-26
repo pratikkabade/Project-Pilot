@@ -71,7 +71,7 @@ export const FM = () => {
                <h2 className=' mt-10 text-2xl font-semibold'>Quick insight</h2>
                <div className="flex flex-row flex-wrap">
                     {finances.map((finance: FinanceInterface) => (
-                         <div key={finance.project_id} className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                         <div key={finance.project_id} className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                               <h3 className='text-2xl font-bold'>
                                    {
                                         projects.find(project => project.project_id === finance.project_id)?.name
@@ -91,7 +91,7 @@ export const FM = () => {
 
                <h2 className=' mt-10 text-2xl font-semibold'>Add-Manage</h2>
                <div className="flex flow-row flex-wrap">
-                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                    <div className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                          <select
                               className="select select-bordered w-full "
                               value={newProjectID} onChange={(e) => setnewProjectID(e.target.value)}>
@@ -183,7 +183,7 @@ export const FM = () => {
                          </button>
                     </div>
 
-                    <div className={`card ${animations ? 'skeleton slide-up' : 'bg-base-100'}`}>
+                    <div className={`card ${animations ? 'bg-base-100 slide-up' : 'bg-base-100'}`}>
                          {
                               projects.map((_: ProjectInterface, index) => (
                                    <div key={index} className="flex flex-col">

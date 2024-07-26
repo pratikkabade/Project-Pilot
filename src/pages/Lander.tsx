@@ -1,4 +1,5 @@
 import { NavigationButton } from "../components/NavigationButton"
+import { Notice } from "../components/Notice"
 
 export const Lander = () => {
     return (
@@ -8,7 +9,7 @@ export const Lander = () => {
                     <h1 className="text-9xl max-lg:text-7xl max-sm:text-5xl font-extrabold animated-text1">
                         Navigate your Projects to Success
                     </h1>
-                    <p className="py-6 text-3xl">
+                    <p className="pt-6 text-3xl">
                         Pro tools created with
                         <span className="animated-text1 ml-2">Developers</span>,
                         <span className="animated-text1 mx-2">Teams</span>and
@@ -16,6 +17,7 @@ export const Lander = () => {
                         in mind
                     </p>
                 </div>
+                <Notice />
             </div>
 
             <div className="p-7">
